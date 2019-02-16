@@ -10,10 +10,7 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      email: '',
-      password: '',
-    };
+    // this.state = {};
   }
 
   // componentWillMount() {
@@ -108,26 +105,51 @@ export default class Login extends Component {
   // }
 
   render() {
+    const { userName } = this.props;
+
     return (
       <div>
-        <h2>Log in</h2>
+        <div>
+          <span>Logged in as {userName}</span>
+          <button>Log Out</button>
+        </div>
+
+        <div>
+          <p>You aren't a member of any organisations. Join an existing one or create a new one.</p>
+        </div>
+
+        <h2>Organisations</h2>
+
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+        </ul>
+
+        <h2>Create Organisation</h2>
 
         <form>
-          <label>
-            Email
-            <input
-              onChange={this.updateField('email')}
-            />
-          </label>
-          <label>
-            Password
-            <input
-              onChange={this.updateField('password')}
-            />
-          </label>
-        </form>
+          <div>
+            <label>
+              Name:
+              <input
+                onChange={this.updateField('email')}
+              />
+            </label>
+          </div>
 
-        <button onClick={this.submitForm}>Login</button>
+          <div>
+            <label>
+              Hourly Rate: $
+              <input
+                onChange={this.updateField('password')}
+              />
+              per hour
+            </label>
+          </div>
+
+          <button onClick={this.submitForm}>Create and Join</button>
+        </form>
       </div>
     );
   }
