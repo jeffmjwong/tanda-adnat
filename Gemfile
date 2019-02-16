@@ -7,6 +7,9 @@ gem 'rails', '~> 5.2.2'
 gem 'sqlite3'
 gem 'puma'
 gem 'bootsnap', require: false
+gem 'slim'
+gem 'webpacker'
+gem 'react-rails'
 
 group :development, :test do
 end
