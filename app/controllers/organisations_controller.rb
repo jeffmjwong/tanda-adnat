@@ -1,7 +1,5 @@
 class OrganisationsController < ApplicationController
-  # skip_before_action :verify_authenticity_token
-
   def home
-
+    return redirect_to(new_user_session_path) if current_user.blank?
   end
 end
