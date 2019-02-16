@@ -3,9 +3,6 @@ import { PropTypes as T } from 'prop-types';
 // import Rails from 'rails-ujs';
 import axios from 'axios';
 
-import Header from 'components/Header';
-
-
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -105,12 +102,10 @@ export default class HomePage extends Component {
   // }
 
   render() {
-    const { currentUser, logOutUrl } = this.props;
+    const { currentUser} = this.props;
 
     return (
       <div>
-        <Header userName={currentUser.name} logOutUrl={logOutUrl} />
-
         <div>
           <p>You aren't a member of any organisations. Join an existing one or create a new one.</p>
         </div>
@@ -154,7 +149,6 @@ export default class HomePage extends Component {
 
 HomePage.propTypes = {
   currentUser: T.object.isRequired,
-  logOutUrl: T.string.isRequired,
 };
 
 // Login.defaultProps = {
