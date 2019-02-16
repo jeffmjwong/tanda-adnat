@@ -1,5 +1,40 @@
 class OrganisationsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: %i[update destroy]
+
+  before_action :check_user
+  before_action :set_organisation, only: %i[show update destroy]
+
   def home
+    @organisations = Organisation.all
+  end
+
+  def show; end
+
+  def update
+    organisation_params = params.permit(:name, :hourly_rate)
+
+    if @organisation.update(organisation_params)
+      head :ok
+    else
+      render json: { errors: @organisation.errors.full_messages }
+    end
+  end
+
+  def destroy
+    if @organisation.destroy
+      head :ok
+    else
+      render json: { errors: @organisation.errors.full_messages }
+    end
+  end
+
+  private
+
+  def check_user
     return redirect_to(new_user_session_path) if current_user.blank?
+  end
+
+  def set_organisation
+    @organisation = Organisation.find(params[:id])
   end
 end
