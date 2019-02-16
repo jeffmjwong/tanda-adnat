@@ -10,6 +10,7 @@ gem 'bootsnap', require: false
 gem 'slim'
 gem 'webpacker'
 gem 'react-rails'
+gem 'devise'
 
 group :development, :test do
 end
