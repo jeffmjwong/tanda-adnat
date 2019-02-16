@@ -7,7 +7,9 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
 
-    // this.state = {};
+    this.state = {
+      responseError: null,
+    };
   }
 
   // componentWillMount() {
@@ -52,6 +54,24 @@ export default class HomePage extends Component {
     axios.post('/authentication/submit_login', { email, password })
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
+  }
+
+  joinOrganisation = async (id) => {
+    const { currentUser } = this.props;
+
+    const response = await axios({
+      method: 'POST',
+      url: `users/${currentUser.id}/join_organisation`,
+      data: { organisation_id: id },
+    });
+
+    if (response.data.errors) {
+      this.setState({
+        responseError: response.data.errors,
+      })
+    } else {
+      window.open('/', '_self');
+    }
   }
 
   // handleSubmit = async (evt) => {
@@ -102,7 +122,8 @@ export default class HomePage extends Component {
   // }
 
   render() {
-    const { currentUser} = this.props;
+    const { currentUser, organisations } = this.props;
+    const { responseError } = this.state;
 
     return (
       <div>
@@ -113,35 +134,49 @@ export default class HomePage extends Component {
         <h2>Organisations</h2>
 
         <ul>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
+          {
+            organisations.map((organisation) => (
+              <li key={organisation.id}>
+                <span>{organisation.name} </span>
+
+                <button
+                  onClick={() => window.open(`/organisations/${organisation.id}`, '_self')}
+                >
+                  Edit
+                </button>
+
+                <button onClick={() => this.joinOrganisation(organisation.id)}>Join</button>
+              </li>
+            ))
+          }
         </ul>
 
         <h2>Create Organisation</h2>
 
-        <form>
-          <div>
-            <label>
-              Name:
-              <input
-                onChange={this.updateField('email')}
-              />
-            </label>
-          </div>
+        <div>
+          <label>
+            Name:
+            <input
+              onChange={this.updateField('email')}
+            />
+          </label>
+        </div>
 
-          <div>
-            <label>
-              Hourly Rate: $
-              <input
-                onChange={this.updateField('password')}
-              />
-              per hour
-            </label>
-          </div>
+        <div>
+          <label>
+            Hourly Rate: $
+            <input
+              onChange={this.updateField('password')}
+            />
+            per hour
+          </label>
+        </div>
 
-          <button onClick={this.submitForm}>Create and Join</button>
-        </form>
+        <button onClick={this.createOrganisation}>Create and Join</button>
+
+        {
+          responseError && <p style={{color: 'red'}}>Error: {responseError}</p>
+        }
       </div>
     );
   }
@@ -149,10 +184,5 @@ export default class HomePage extends Component {
 
 HomePage.propTypes = {
   currentUser: T.object.isRequired,
+  organisations: T.arrayOf(T.object).isRequired,
 };
-
-// Login.defaultProps = {
-//   persistedPicture: null,
-//   fuel: '',
-//   odometer: 0,
-// };
