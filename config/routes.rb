@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[] do
-    member do
-      post 'join_organisation'
+    collection do
+      put 'join_organisation'
+      put 'leave_organisation'
+      get 'organisation'
     end
   end
 end

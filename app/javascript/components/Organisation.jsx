@@ -82,13 +82,12 @@ export default class Organisation extends Component {
           </label>
         </div>
 
+        <button onClick={() => this.updateOrganisation(id)}>Update</button>
+        <button onClick={() => this.deleteOrganisation(id)}>Delete Organisation</button>
+
         {
           responseError && <p style={{color: 'red'}}>Error: {responseError}</p>
         }
-
-        <button onClick={() => this.updateOrganisation(id)}>Update</button>
-
-        <button onClick={() => this.deleteOrganisation(id)}>Delete Organisation</button>
       </div>
     );
   }
