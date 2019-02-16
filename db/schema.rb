@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_093012) do
+ActiveRecord::Schema.define(version: 2019_02_16_055119) do
+
   create_table "organisations", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "hourly_rate", precision: 10, scale: 2, default: "0.0"
@@ -18,4 +19,13 @@ ActiveRecord::Schema.define(version: 2019_02_14_093012) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_organisations_on_name", unique: true
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "organisation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_users_on_organisation_id"
+  end
+
 end
