@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { PropTypes as T } from 'prop-types';
 // import Rails from 'rails-ujs';
 import axios from 'axios';
-// import createAlert from 'js/alert';
 
-// import { FaCameraRetro } from 'react-icons/fa';
+import Header from 'components/Header';
 
-export default class Login extends Component {
+
+export default class HomePage extends Component {
   constructor(props) {
     super(props);
 
@@ -105,14 +105,11 @@ export default class Login extends Component {
   // }
 
   render() {
-    const { userName } = this.props;
+    const { currentUser, logOutUrl } = this.props;
 
     return (
       <div>
-        <div>
-          <span>Logged in as {userName}</span>
-          <button>Log Out</button>
-        </div>
+        <Header userName={currentUser.name} logOutUrl={logOutUrl} />
 
         <div>
           <p>You aren't a member of any organisations. Join an existing one or create a new one.</p>
@@ -155,13 +152,10 @@ export default class Login extends Component {
   }
 }
 
-// Login.propTypes = {
-//   persistedPicture: T.string,
-//   updateUrl: T.string.isRequired,
-//   redirectUrl: T.string.isRequired,
-//   fuel: T.string,
-//   odometer: T.number,
-// };
+HomePage.propTypes = {
+  currentUser: T.object.isRequired,
+  logOutUrl: T.string.isRequired,
+};
 
 // Login.defaultProps = {
 //   persistedPicture: null,
