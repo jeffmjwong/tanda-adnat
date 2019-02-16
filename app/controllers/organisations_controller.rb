@@ -6,6 +6,7 @@ class OrganisationsController < ApplicationController
 
   def home
     @organisations = Organisation.all
+    @organisation = current_user.organisation
   end
 
   def show; end
