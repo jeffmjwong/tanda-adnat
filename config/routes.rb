@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'organisations#home'
 
-  resources :organisations, only: %i[show update destroy] do
+  resources :organisations, only: %i[show create update destroy] do
     collection do
       get 'home'
     end

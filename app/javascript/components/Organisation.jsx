@@ -14,7 +14,7 @@ export default class Organisation extends Component {
     };
   }
 
-  updateField = field => ({ target }) => {
+  updateField = (field) => ({ target }) => {
     this.setState({
       [field]: target.value,
     });
@@ -32,9 +32,13 @@ export default class Organisation extends Component {
     if (response.data.errors) {
       this.setState({
         responseError: response.data.errors,
-      })
+      });
     } else {
-      window.open('/', '_self');
+      this.setState({
+        responseError: null,
+      }, () => {
+        window.open('/', '_self');
+      });
     }
   }
 
@@ -47,9 +51,13 @@ export default class Organisation extends Component {
     if (response.data.errors) {
       this.setState({
         responseError: response.data.errors,
-      })
+      });
     } else {
-      window.open('/', '_self');
+      this.setState({
+        responseError: null,
+      }, () => {
+        window.open('/', '_self');
+      });
     }
   }
 

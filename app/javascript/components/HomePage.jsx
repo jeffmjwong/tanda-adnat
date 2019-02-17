@@ -7,12 +7,15 @@ export default class HomePage extends Component {
     super(props);
 
     this.state = {
+      organisations: props.organisations,
       organisation: props.organisation,
+      name: '',
+      hourlyRate: '',
       responseError: null,
     };
   }
 
-  updateField = field => ({ target }) => {
+  updateField = (field) => ({ target }) => {
     this.setState({
       [field]: target.value,
     });
@@ -21,7 +24,7 @@ export default class HomePage extends Component {
   joinOrganisation = async (id) => {
     const response = await axios({
       method: 'PUT',
-      url: `users/join_organisation`,
+      url: `/users/join_organisation`,
       data: { organisation_id: id },
     });
 
@@ -32,6 +35,31 @@ export default class HomePage extends Component {
     } else {
       this.setState({
         organisation: response.data.organisation,
+        responseError: null,
+      })
+    }
+  }
+
+  createOrganisation = async () => {
+    const { organisations, name, hourlyRate } = this.state;
+
+    const response = await axios({
+      method: 'POST',
+      url: `/organisations`,
+      data: { name, hourly_rate: hourlyRate },
+    });
+
+    if (response.data.errors) {
+      this.setState({
+        responseError: response.data.errors,
+      })
+    } else {
+      const { organisation } = response.data;
+
+      this.setState({
+        organisations: [...organisations, organisation],
+        organisation,
+        responseError: null,
       })
     }
   }
@@ -39,7 +67,7 @@ export default class HomePage extends Component {
   leaveOrganisation = async () => {
     const response = await axios({
       method: 'PUT',
-      url: `users/leave_organisation`,
+      url: `/users/leave_organisation`,
       data: { organisation_id: null },
     });
 
@@ -50,13 +78,13 @@ export default class HomePage extends Component {
     } else {
       this.setState({
         organisation: null,
+        responseError: null,
       })
     }
   }
 
   render() {
-    const { organisations } = this.props;
-    const { organisation, responseError } = this.state;
+    const { organisations, organisation, responseError } = this.state;
 
     return (
       <div>
@@ -100,7 +128,7 @@ export default class HomePage extends Component {
                 <label>
                   Name:
                   <input
-                    onChange={this.updateField('email')}
+                    onChange={this.updateField('name')}
                   />
                 </label>
               </div>
@@ -109,7 +137,7 @@ export default class HomePage extends Component {
                 <label>
                   Hourly Rate: $
                   <input
-                    onChange={this.updateField('password')}
+                    onChange={this.updateField('hourlyRate')}
                   />
                   per hour
                 </label>

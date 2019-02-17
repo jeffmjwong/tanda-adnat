@@ -1,5 +1,5 @@
 class OrganisationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[update destroy]
+  skip_before_action :verify_authenticity_token, only: %i[create update destroy]
 
   before_action :check_user
   before_action :set_organisation, only: %i[show update destroy]
@@ -11,9 +11,18 @@ class OrganisationsController < ApplicationController
 
   def show; end
 
-  def update
-    organisation_params = params.permit(:name, :hourly_rate)
+  def create
+    organisation = Organisation.new(organisation_params)
 
+    if organisation.save
+      current_user.update!(organisation: organisation)
+      render json: { organisation: current_user.organisation }
+    else
+      render json: { errors: organisation.errors.full_messages }
+    end
+  end
+
+  def update
     if @organisation.update(organisation_params)
       head :ok
     else
@@ -37,5 +46,9 @@ class OrganisationsController < ApplicationController
 
   def set_organisation
     @organisation = Organisation.find(params[:id])
+  end
+
+  def organisation_params
+    params.permit(:name, :hourly_rate)
   end
 end
