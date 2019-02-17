@@ -134,6 +134,10 @@ export default class Shifts extends Component {
           </tbody>
         </table>
 
+        <div className='margin-small-y'>
+          <button onClick={() => window.open('/', '_self')}>Back To Home Page</button>
+        </div>
+
         {
           responseError && <p style={{color: 'red'}}>Error: {responseError}</p>
         }

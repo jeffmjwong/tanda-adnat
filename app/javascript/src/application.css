@@ -12,3 +12,11 @@ table th, table td {
 table input {
   font-size: 0.8rem;
 }
+
+.margin-small-x {
+  margin: 0 0.5em;
+}
+
+.margin-small-y {
+  margin: 0.5em 0;
+}

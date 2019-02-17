@@ -69,7 +69,7 @@ export default class Organisation extends Component {
       <div>
         <h2>Edit Organisation</h2>
 
-        <div>
+        <div className='margin-small-y'>
           <label>
             Name:
             <input
@@ -90,12 +90,16 @@ export default class Organisation extends Component {
           </label>
         </div>
 
-        <div>
-          <button onClick={() => this.updateOrganisation(id)}>Update</button>
-          <button onClick={() => this.deleteOrganisation(id)}>Delete Organisation</button>
+        <div className='margin-small-y'>
+          <button onClick={() => this.updateOrganisation(id)}>
+            Update
+          </button>
+          <button onClick={() => this.deleteOrganisation(id)} className='margin-small-x'>
+            Delete Organisation
+          </button>
         </div>
 
-        <div>
+        <div className='margin-small-y'>
           <button onClick={() => window.open('/', '_self')}>Back To Home Page</button>
         </div>
 

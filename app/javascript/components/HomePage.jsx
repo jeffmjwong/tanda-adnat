@@ -101,11 +101,15 @@ export default class HomePage extends Component {
             <div>
               <h2>{organisation.name}</h2>
 
-              <button onClick={() => this.viewShifts(organisation.id)}>View Shifts</button>
-              <button onClick={() => this.editOrganisation(organisation.id)}>
+              <button onClick={() => this.viewShifts(organisation.id)}>
+                View Shifts
+              </button>
+              <button onClick={() => this.editOrganisation(organisation.id)} className='margin-small-x'>
                 Edit
               </button>
-              <button onClick={this.leaveOrganisation}>Leave</button>
+              <button onClick={this.leaveOrganisation}>
+                Leave
+              </button>
             </div> :
             <div>
               <div>
@@ -120,10 +124,12 @@ export default class HomePage extends Component {
                     <li key={organisation.id}>
                       <span>{organisation.name} </span>
 
-                      <button onClick={() => this.editOrganisation(organisation.id)}>
+                      <button onClick={() => this.editOrganisation(organisation.id)} className='margin-small-x'>
                         Edit
                       </button>
-                      <button onClick={() => this.joinOrganisation(organisation.id)}>Join</button>
+                      <button onClick={() => this.joinOrganisation(organisation.id)}>
+                        Join
+                      </button>
                     </li>
                   ))
                 }
@@ -140,7 +146,7 @@ export default class HomePage extends Component {
                 </label>
               </div>
 
-              <div>
+              <div className='margin-small-y'>
                 <label>
                   Hourly Rate: $
                   <input
@@ -150,7 +156,9 @@ export default class HomePage extends Component {
                 </label>
               </div>
 
-              <button onClick={this.createOrganisation}>Create and Join</button>
+              <button onClick={this.createOrganisation} className='margin-small-y'>
+                Create and Join
+              </button>
             </div>
         }
 
