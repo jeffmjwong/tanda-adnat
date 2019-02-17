@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: %i[show] do
+  resources :users, only: %i[show update] do
     collection do
       put 'join_organisation'
       put 'leave_organisation'
