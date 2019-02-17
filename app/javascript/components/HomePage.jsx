@@ -25,6 +25,10 @@ export default class HomePage extends Component {
     window.open(`/organisations/${id}`, '_self');
   }
 
+  viewShifts = async (id) => {
+    window.open(`/organisations/${id}/shifts`, '_self');
+  }
+
   joinOrganisation = async (id) => {
     const response = await axios({
       method: 'PUT',
@@ -97,7 +101,7 @@ export default class HomePage extends Component {
             <div>
               <h2>{organisation.name}</h2>
 
-              <button>View Shifts</button>
+              <button onClick={() => this.viewShifts(organisation.id)}>View Shifts</button>
               <button onClick={() => this.editOrganisation(organisation.id)}>
                 Edit
               </button>
