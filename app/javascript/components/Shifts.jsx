@@ -25,6 +25,26 @@ export default class Shifts extends Component {
     });
   }
 
+  deleteShift = async (id) => {
+    const { shifts } = this.state;
+
+    const response = await axios({
+      method: 'DELETE',
+      url: `/shifts/${id}`,
+    });
+
+    if (response.data.errors) {
+      this.setState({
+        responseError: response.data.errors,
+      });
+    } else {
+      this.setState({
+        shifts: shifts.filter((shift) => shift.id !== id),
+        responseError: null,
+      });
+    }
+  }
+
   createShift = async () => {
     const { organisation } = this.props;
     const { shiftDate, startTime, finishTime, breakLength } = this.state;
@@ -92,6 +112,13 @@ export default class Shifts extends Component {
                   <td>{shift.break_length}</td>
                   <td>{shift.hours_worked}</td>
                   <td>{shift.shift_cost}</td>
+                  <td>
+                    <button>Edit</button>
+                    <button>Update</button>
+                    <button onClick={() => this.deleteShift(shift.id)}>
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
             }

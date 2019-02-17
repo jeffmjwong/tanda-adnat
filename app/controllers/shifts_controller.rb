@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[create]
+  skip_before_action :verify_authenticity_token, only: %i[create destroy]
 
   before_action :check_user
 
@@ -13,6 +13,16 @@ class ShiftsController < ApplicationController
     end
   rescue => error
     render json: { errors: error.message }
+  end
+
+  def destroy
+    shift = Shift.find(params[:id])
+
+    if shift.destroy
+      head :ok
+    else
+      render json: { errors: shift.errors.full_messages }
+    end
   end
 
   private

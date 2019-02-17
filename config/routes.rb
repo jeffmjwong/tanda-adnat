@@ -20,5 +20,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :shifts, only: %i[create]
+  resources :shifts, only: %i[create destroy]
 end
