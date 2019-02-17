@@ -14,18 +14,20 @@ class Shift < ApplicationRecord
   def self.by_organisation(organisation_id)
     where(user_id: Organisation.find(organisation_id).users.pluck(:id))
       .order('start DESC')
-      .map do |shift|
-        {
-          id: shift.id,
-          employee_name: shift.user.name,
-          shift_date: shift.start.strftime('%d/%m/%Y'),
-          start_time: shift.start.strftime('%I:%M%P'),
-          finish_time: shift.finish.strftime('%I:%M%P'),
-          break_length: shift.break_length,
-          hours_worked: shift.hours_worked,
-          shift_cost: shift.shift_cost
-        }
-      end
+      .map(&:format_hash)
+  end
+
+  def format_hash
+    {
+      id: id,
+      employee_name: user.name,
+      shift_date: start.strftime('%d/%m/%Y'),
+      start_time: start.strftime('%I:%M%P'),
+      finish_time: finish.strftime('%I:%M%P'),
+      break_length: break_length,
+      hours_worked: hours_worked,
+      shift_cost: shift_cost
+    }
   end
 
   def hours_worked
