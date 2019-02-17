@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 
   before_action :check_user
 
+  def show; end
+
   def join_organisation
     organisation_params = params.permit(:organisation_id)
 
