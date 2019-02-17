@@ -8,3 +8,7 @@ table th, table td {
   border: 1px solid black;
   padding: 0.5em;
 }
+
+table input {
+  font-size: 0.8rem;
+}

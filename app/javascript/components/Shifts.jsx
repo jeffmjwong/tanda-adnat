@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes as T } from 'prop-types';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
 
 import 'src/application.css';
 
@@ -10,6 +11,10 @@ export default class Shifts extends Component {
 
     this.state = {
       shifts: props.shifts,
+      shiftDate: '',
+      startTime: '',
+      finishTime: '',
+      breakLength: '',
       responseError: null,
     };
   }
@@ -22,7 +27,7 @@ export default class Shifts extends Component {
 
   render() {
     const { organisation, currentUser } = this.props;
-    const { shifts, responseError } = this.state;
+    const { shifts, shiftDate, responseError } = this.state;
 
     return (
       <div>
@@ -58,11 +63,33 @@ export default class Shifts extends Component {
             }
             <tr>
               <td>{currentUser.name}</td>
-              <td><input /></td>
-              <td><input /></td>
-              <td><input /></td>
-              <td><input /></td>
-              <td colSpan='2'><button>Create Shift</button></td>
+              <td>
+                <InputMask
+                  mask='99/99/9999'
+                  placeholder='DD/MM/YYYY'
+                  onChange={this.updateField('shiftDate')}
+                />
+              </td>
+              <td>
+                <InputMask
+                  mask='99:99'
+                  placeholder='hh:mm (24-hour format)'
+                  onChange={this.updateField('startTime')}
+                />
+              </td>
+              <td>
+                <InputMask
+                  mask='99:99'
+                  placeholder='hh:mm (24-hour format)'
+                  onChange={this.updateField('finishTime')}
+                />
+              </td>
+              <td>
+                <input onChange={this.updateField('breakLength')} />
+              </td>
+              <td colSpan='2'>
+                <button onClick={this.createShift}>Create Shift</button>
+              </td>
             </tr>
           </tbody>
         </table>
