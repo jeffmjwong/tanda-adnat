@@ -25,9 +25,43 @@ export default class Shifts extends Component {
     });
   }
 
+  createShift = async () => {
+    const { organisation } = this.props;
+    const { shiftDate, startTime, finishTime, breakLength } = this.state;
+
+    const response = await axios({
+      method: 'POST',
+      url: `/shifts`,
+      data: {
+        organisation_id: organisation.id,
+        shift_date: shiftDate,
+        start_time: startTime,
+        finish_time: finishTime,
+        break_length: breakLength,
+      },
+    });
+
+    if (response.data.errors) {
+      this.setState({
+        responseError: response.data.errors,
+      });
+    } else {
+      const { shifts } = response.data;
+
+      this.setState({
+        shifts,
+        shiftDate: '',
+        startTime: '',
+        finishTime: '',
+        breakLength: '',
+        responseError: null,
+      });
+    }
+  }
+
   render() {
     const { organisation, currentUser } = this.props;
-    const { shifts, shiftDate, responseError } = this.state;
+    const { shifts, shiftDate, startTime, finishTime, breakLength, responseError } = this.state;
 
     return (
       <div>
@@ -67,6 +101,7 @@ export default class Shifts extends Component {
                 <InputMask
                   mask='99/99/9999'
                   placeholder='DD/MM/YYYY'
+                  value={shiftDate}
                   onChange={this.updateField('shiftDate')}
                 />
               </td>
@@ -74,6 +109,7 @@ export default class Shifts extends Component {
                 <InputMask
                   mask='99:99'
                   placeholder='hh:mm (24-hour format)'
+                  value={startTime}
                   onChange={this.updateField('startTime')}
                 />
               </td>
@@ -81,11 +117,15 @@ export default class Shifts extends Component {
                 <InputMask
                   mask='99:99'
                   placeholder='hh:mm (24-hour format)'
+                  value={finishTime}
                   onChange={this.updateField('finishTime')}
                 />
               </td>
               <td>
-                <input onChange={this.updateField('breakLength')} />
+                <input
+                  value={breakLength}
+                  onChange={this.updateField('breakLength')}
+                />
               </td>
               <td colSpan='2'>
                 <button onClick={this.createShift}>Create Shift</button>
