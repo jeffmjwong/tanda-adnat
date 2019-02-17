@@ -63,7 +63,6 @@ export default class Organisation extends Component {
     }
   }
 
-
   render() {
     const { id, name, hourlyRate, responseError } = this.state;
 
