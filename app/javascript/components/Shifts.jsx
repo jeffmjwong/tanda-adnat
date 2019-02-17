@@ -3,6 +3,8 @@ import { PropTypes as T } from 'prop-types';
 import axios from 'axios';
 import InputMask from 'react-input-mask';
 
+import Shift from 'components/Shift';
+
 import 'src/application.css';
 
 export default class Shifts extends Component {
@@ -104,22 +106,11 @@ export default class Shifts extends Component {
           <tbody>
             {
               shifts.map((shift) => (
-                <tr key={shift.id}>
-                  <td>{shift.employee_name}</td>
-                  <td>{shift.shift_date}</td>
-                  <td>{shift.start_time}</td>
-                  <td>{shift.finish_time}</td>
-                  <td>{shift.break_length}</td>
-                  <td>{shift.hours_worked}</td>
-                  <td>{shift.shift_cost}</td>
-                  <td>
-                    <button>Edit</button>
-                    <button>Update</button>
-                    <button onClick={() => this.deleteShift(shift.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                <Shift
+                  key={shift.id}
+                  shift={shift}
+                  deleteShift={this.deleteShift}
+                />
               ))
             }
             <tr>
