@@ -9,4 +9,6 @@ class Organisation < ApplicationRecord
               allow_blank: true,
               message: 'must be greater than or equal to 0.00!'
             }
+
+  has_many :users, dependent: :nullify
 end
