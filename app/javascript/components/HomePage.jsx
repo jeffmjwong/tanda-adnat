@@ -30,7 +30,7 @@ export default class HomePage extends Component {
   joinOrganisation = async (id) => {
     const response = await axios({
       method: 'PUT',
-      url: `/users/join_organisation`,
+      url: '/users/join_organisation',
       data: { organisation_id: id },
     });
 
@@ -51,7 +51,7 @@ export default class HomePage extends Component {
 
     const response = await axios({
       method: 'POST',
-      url: `/organisations`,
+      url: '/organisations',
       data: { name, hourly_rate: hourlyRate },
     });
 
@@ -73,7 +73,7 @@ export default class HomePage extends Component {
   leaveOrganisation = async () => {
     const response = await axios({
       method: 'PUT',
-      url: `/users/leave_organisation`,
+      url: '/users/leave_organisation',
       data: { organisation_id: null },
     });
 
