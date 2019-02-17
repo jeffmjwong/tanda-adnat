@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     collection do
       get 'home'
     end
+
+    member do
+      get 'shifts'
+    end
   end
 
   resources :users, only: %i[] do

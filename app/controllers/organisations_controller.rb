@@ -2,7 +2,7 @@ class OrganisationsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[create update destroy]
 
   before_action :check_user
-  before_action :set_organisation, only: %i[show update destroy]
+  before_action :set_organisation, only: %i[show update destroy shifts]
 
   def home
     @organisations = Organisation.all
@@ -36,6 +36,10 @@ class OrganisationsController < ApplicationController
     else
       render json: { errors: @organisation.errors.full_messages }
     end
+  end
+
+  def shifts
+    @shifts = Shift.by_organisation(params[:id])
   end
 
   private
