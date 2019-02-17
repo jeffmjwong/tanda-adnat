@@ -21,6 +21,10 @@ export default class HomePage extends Component {
     });
   }
 
+  editOrganisation = (id) => {
+    window.open(`/organisations/${id}`, '_self');
+  }
+
   joinOrganisation = async (id) => {
     const response = await axios({
       method: 'PUT',
@@ -31,12 +35,12 @@ export default class HomePage extends Component {
     if (response.data.errors) {
       this.setState({
         responseError: response.data.errors,
-      })
+      });
     } else {
       this.setState({
         organisation: response.data.organisation,
         responseError: null,
-      })
+      });
     }
   }
 
@@ -52,7 +56,7 @@ export default class HomePage extends Component {
     if (response.data.errors) {
       this.setState({
         responseError: response.data.errors,
-      })
+      });
     } else {
       const { organisation } = response.data;
 
@@ -60,7 +64,7 @@ export default class HomePage extends Component {
         organisations: [...organisations, organisation],
         organisation,
         responseError: null,
-      })
+      });
     }
   }
 
@@ -74,12 +78,12 @@ export default class HomePage extends Component {
     if (response.data.errors) {
       this.setState({
         responseError: response.data.errors,
-      })
+      });
     } else {
       this.setState({
         organisation: null,
         responseError: null,
-      })
+      });
     }
   }
 
@@ -94,7 +98,9 @@ export default class HomePage extends Component {
               <h2>{organisation.name}</h2>
 
               <button>View Shifts</button>
-              <button>Edit</button>
+              <button onClick={() => this.editOrganisation(organisation.id)}>
+                Edit
+              </button>
               <button onClick={this.leaveOrganisation}>Leave</button>
             </div> :
             <div>
@@ -110,12 +116,9 @@ export default class HomePage extends Component {
                     <li key={organisation.id}>
                       <span>{organisation.name} </span>
 
-                      <button
-                        onClick={() => window.open(`/organisations/${organisation.id}`, '_self')}
-                      >
+                      <button onClick={() => this.editOrganisation(organisation.id)}>
                         Edit
                       </button>
-
                       <button onClick={() => this.joinOrganisation(organisation.id)}>Join</button>
                     </li>
                   ))
