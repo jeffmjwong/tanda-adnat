@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[create destroy]
+  skip_before_action :verify_authenticity_token
 
   before_action :check_user
 
@@ -23,6 +23,15 @@ class ShiftsController < ApplicationController
     else
       render json: { errors: shift.errors.full_messages }
     end
+  end
+
+  def filter
+    shifts = Shift.filter(
+      from_date: Time.zone.parse(params[:filter_from]),
+      to_date: Time.zone.parse(params[:filter_to])
+    ).by_organisation(params[:organisation_id])
+
+    render json: { shifts: shifts }
   end
 
   private

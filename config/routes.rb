@@ -20,5 +20,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :shifts, only: %i[create destroy]
+  resources :shifts, only: %i[create destroy] do
+    collection do
+      post 'filter'
+    end
+  end
 end
