@@ -11,6 +11,10 @@ class Shift < ApplicationRecord
 
   validate :finish_cannot_be_earlier_than_start
 
+  scope :by_organisation, lambda { |organisation_id|
+    where(user_id: Organisation.find(organisation_id).users.pluck(:id))
+  }
+
   private
 
   def finish_cannot_be_earlier_than_start
