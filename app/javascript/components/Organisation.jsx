@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { PropTypes as T } from 'prop-types';
 import axios from 'axios';
 
+import 'src/application.css';
+
 export default class Organisation extends Component {
   constructor(props) {
     super(props);
