@@ -19,4 +19,6 @@ Rails.application.routes.draw do
       get 'organisation'
     end
   end
+
+  resources :shifts, only: %i[create]
 end
