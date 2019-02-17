@@ -3,9 +3,8 @@ import { PropTypes as T } from 'prop-types';
 import axios from 'axios';
 import InputMask from 'react-input-mask';
 
-import Shift from 'components/Shift';
-
 import 'src/application.css';
+import Shift from 'components/Shift';
 
 export default class Shifts extends Component {
   constructor(props) {
@@ -17,6 +16,8 @@ export default class Shifts extends Component {
       startTime: '',
       finishTime: '',
       breakLength: '',
+      filterFrom: '',
+      filterTo: '',
       responseError: null,
     };
   }
@@ -53,7 +54,7 @@ export default class Shifts extends Component {
 
     const response = await axios({
       method: 'POST',
-      url: `/shifts`,
+      url: '/shifts',
       data: {
         organisation_id: organisation.id,
         shift_date: shiftDate,
@@ -81,14 +82,67 @@ export default class Shifts extends Component {
     }
   }
 
+  filterShifts = async () => {
+    const { organisation } = this.props;
+    const { filterFrom, filterTo } = this.state;
+
+    const response = await axios({
+      method: 'POST',
+      url: '/shifts/filter',
+      data: {
+        organisation_id: organisation.id,
+        filter_from: filterFrom,
+        filter_to: filterTo,
+      },
+    });
+
+    this.setState({
+      shifts: response.data.shifts,
+    });
+  }
+
   render() {
     const { organisation, currentUser } = this.props;
-    const { shifts, shiftDate, startTime, finishTime, breakLength, responseError } = this.state;
+    const {
+      shifts,
+      shiftDate,
+      startTime,
+      finishTime,
+      breakLength,
+      filterFrom,
+      filterTo,
+      responseError
+    } = this.state;
 
     return (
       <div>
         <h2>{organisation.name}</h2>
         <h3>Shifts</h3>
+
+        <div className='margin-small-y'>
+          <label>
+            From:
+            <InputMask
+              mask='99/99/9999'
+              placeholder='DD/MM/YYYY'
+              value={filterFrom}
+              onChange={this.updateField('filterFrom')}
+            />
+          </label>
+          <label className='margin-small-x'>
+            To:
+            <InputMask
+              mask='99/99/9999'
+              placeholder='DD/MM/YYYY'
+              value={filterTo}
+              onChange={this.updateField('filterTo')}
+            />
+          </label>
+
+          <button onClick={this.filterShifts}>
+            Filter
+          </button>
+        </div>
 
         <table>
           <thead>

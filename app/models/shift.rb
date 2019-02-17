@@ -11,6 +11,10 @@ class Shift < ApplicationRecord
 
   validate :finish_cannot_be_earlier_than_start
 
+  scope :filter, lambda { |from_date:, to_date:|
+    where('start > :from AND start < :to', from: from_date, to: to_date)
+  }
+
   def self.by_organisation(organisation_id)
     where(user_id: Organisation.find(organisation_id).users.pluck(:id))
       .order('start DESC')
