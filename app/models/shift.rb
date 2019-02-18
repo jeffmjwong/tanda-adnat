@@ -11,7 +11,7 @@ class Shift < ApplicationRecord
 
   validate :finish_cannot_be_earlier_than_start
 
-  scope :filter, lambda { |from_date:, to_date:|
+  scope :filter_by_date, lambda { |from_date:, to_date:|
     where('start > :from AND start < :to', from: from_date, to: to_date)
   }
 

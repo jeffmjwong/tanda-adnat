@@ -77,6 +77,8 @@ export default class Shifts extends Component {
         startTime: '',
         finishTime: '',
         breakLength: '',
+        filterFrom: '',
+        filterTo: '',
         responseError: null,
       });
     }
@@ -167,6 +169,7 @@ export default class Shifts extends Component {
                 />
               ))
             }
+
             <tr>
               <td>{currentUser.name}</td>
               <td>

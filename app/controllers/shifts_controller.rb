@@ -26,12 +26,14 @@ class ShiftsController < ApplicationController
   end
 
   def filter
-    shifts = Shift.filter(
+    shifts = Shift.filter_by_date(
       from_date: Time.zone.parse(params[:filter_from]),
-      to_date: Time.zone.parse(params[:filter_to])
+      to_date: Time.zone.parse(params[:filter_to]).next_day
     ).by_organisation(params[:organisation_id])
 
     render json: { shifts: shifts }
+  rescue ArgumentError
+    render json: { shifts: [] }
   end
 
   private
