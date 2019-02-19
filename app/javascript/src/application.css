@@ -20,3 +20,15 @@ input {
 .margin-small-y {
   margin: 0.5em 0;
 }
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.w50 {
+  width: 50%;
+}
