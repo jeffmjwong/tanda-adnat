@@ -1,9 +1,10 @@
 class Organisation < ApplicationRecord
-  has_many :users, dependent: :nullify
+  has_many :organisation_memberships, dependent: :destroy
+  has_many :users, through: :organisation_memberships
 
   validates :name,
             presence: true,
-            uniqueness: { message: 'already existed!' },
+            uniqueness: { case_sensitive: false },
             length: { minimum: 1 }
   validates :hourly_rate,
             numericality: {

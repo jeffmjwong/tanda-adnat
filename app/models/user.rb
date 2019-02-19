@@ -3,7 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  belongs_to :organisation, optional: true
+
+  has_many :organisation_memberships, dependent: :destroy
+  has_many :organisations, through: :organisation_memberships
 
   validates :name,
             presence: true,
