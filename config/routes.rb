@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :organisations, only: %i[show create update destroy] do
     member do
       post 'join'
+      post 'leave'
       get 'shifts'
     end
   end
@@ -12,7 +13,6 @@ Rails.application.routes.draw do
   resources :users, only: %i[show update] do
     collection do
       get 'home'
-      put 'leave_organisation'
       get 'organisation'
     end
   end

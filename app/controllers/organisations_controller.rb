@@ -48,6 +48,19 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def leave
+    organisation_membership = OrganisationMembership.find_by(
+      organisation_id: params[:id],
+      user_id: current_user.id
+    )
+
+    if organisation_membership.destroy
+      render json: { user_organisations: current_user.organisations }
+    else
+      render json: { errors: organisation_membership.errors.full_messages }
+    end
+  end
+
   def shifts
     @shifts = Shift.by_organisation(params[:id])
   end

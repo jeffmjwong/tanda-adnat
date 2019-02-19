@@ -20,16 +20,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def leave_organisation
-    organisation_params = params.permit(:organisation_id)
-
-    if current_user.update(organisation_params)
-      head :ok
-    else
-      render json: { errors: @user.errors.full_messages }
-    end
-  end
-
   private
 
   def check_user
