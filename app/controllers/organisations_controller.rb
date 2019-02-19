@@ -1,13 +1,8 @@
 class OrganisationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[create update destroy]
+  skip_before_action :verify_authenticity_token, except: %i[show shifts]
 
   before_action :check_user
   before_action :set_organisation, only: %i[show update destroy shifts]
-
-  def home
-    @organisations = Organisation.all
-    @organisation = current_user.organisation
-  end
 
   def show; end
 
@@ -35,6 +30,21 @@ class OrganisationsController < ApplicationController
       head :ok
     else
       render json: { errors: @organisation.errors.full_messages }
+    end
+  end
+
+  def join
+    organisation_membership = OrganisationMembership.find_or_initialize_by(
+      organisation_id: params[:id],
+      user_id: current_user.id
+    )
+
+    return render json: { errors: 'Already joined organisation!' } if organisation_membership.persisted?
+
+    if organisation_membership.save
+      render json: { user_organisations: current_user.organisations }
+    else
+      render json: { errors: organisation_membership.errors.full_messages }
     end
   end
 

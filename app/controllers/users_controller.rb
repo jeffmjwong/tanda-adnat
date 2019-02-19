@@ -3,6 +3,11 @@ class UsersController < ApplicationController
 
   before_action :check_user
 
+  def home
+    @organisations = Organisation.all
+    @user_organisations = current_user.organisations
+  end
+
   def show; end
 
   def update
@@ -12,16 +17,6 @@ class UsersController < ApplicationController
       head :ok
     else
       render json: { errors: user.errors.full_messages }
-    end
-  end
-
-  def join_organisation
-    organisation_params = params.permit(:organisation_id)
-
-    if current_user.update(organisation_params)
-      render json: { organisation: current_user.organisation }
-    else
-      render json: { errors: @user.errors.full_messages }
     end
   end
 
