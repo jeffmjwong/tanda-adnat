@@ -46,7 +46,7 @@ export default class HomePage extends Component {
   }
 
   createOrganisation = async () => {
-    const { organisations, name, hourlyRate } = this.state;
+    const { organisations, userOrganisations, name, hourlyRate } = this.state;
 
     const response = await axios({
       method: 'POST',
@@ -63,7 +63,7 @@ export default class HomePage extends Component {
 
       this.setState({
         organisations: [...organisations, organisation],
-        organisation,
+        userOrganisations: [...userOrganisations, organisation],
         responseError: null,
       });
     }

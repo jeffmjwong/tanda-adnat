@@ -7,14 +7,13 @@ class OrganisationsController < ApplicationController
   def show; end
 
   def create
-    organisation = Organisation.new(organisation_params)
+    organisation = Organisation.create!(organisation_params)
 
-    if organisation.save
-      current_user.update!(organisation: organisation)
-      render json: { organisation: current_user.organisation }
-    else
-      render json: { errors: organisation.errors.full_messages }
-    end
+    OrganisationMembership.create!(organisation_id: organisation.id, user_id: current_user.id)
+
+    render json: { organisation: organisation, user_organisations: current_user.organisations }
+  rescue => error
+    render json: { errors: error.message }
   end
 
   def update

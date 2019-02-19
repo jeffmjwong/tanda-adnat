@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   resources :users, only: %i[show update] do
     collection do
       get 'home'
-      get 'organisation'
     end
   end
 
