@@ -9,6 +9,7 @@ export default class HomePage extends Component {
     super(props);
 
     this.state = {
+      organisations: props.organisations,
       userOrganisations: props.userOrganisations,
       name: '',
       hourlyRate: '',
@@ -26,10 +27,10 @@ export default class HomePage extends Component {
     window.open(`/organisations/${id}`, '_self');
   }
 
-  joinOrganisation = async (id) => {
+  joinOrLeaveOrganisation = async (id, action) => {
     const response = await axios({
       method: 'POST',
-      url: `/organisations/${id}/join`,
+      url: `/organisations/${id}/${action}`,
     });
 
     if (response.data.errors) {
@@ -68,28 +69,8 @@ export default class HomePage extends Component {
     }
   }
 
-  leaveOrganisation = async () => {
-    const response = await axios({
-      method: 'PUT',
-      url: '/users/leave_organisation',
-      data: { organisation_id: null },
-    });
-
-    if (response.data.errors) {
-      this.setState({
-        responseError: response.data.errors,
-      });
-    } else {
-      this.setState({
-        organisation: null,
-        responseError: null,
-      });
-    }
-  }
-
   render() {
-    const { organisations } = this.props;
-    const { userOrganisations, responseError } = this.state;
+    const { organisations, userOrganisations, responseError } = this.state;
 
     return (
       <div className='flex'>
@@ -112,7 +93,7 @@ export default class HomePage extends Component {
                   <button onClick={() => this.editOrganisation(organisation.id)} className='margin-small-x'>
                     Edit
                   </button>
-                  <button onClick={() => this.joinOrganisation(organisation.id)}>
+                  <button onClick={() => this.joinOrLeaveOrganisation(organisation.id, 'join')}>
                     Join
                   </button>
                 </li>
@@ -165,7 +146,7 @@ export default class HomePage extends Component {
                   <button onClick={() => this.editOrganisation(userOrganisation.id)} className='margin-small-x'>
                     Edit
                   </button>
-                  <button onClick={this.leaveOrganisation}>
+                  <button onClick={() => this.joinOrLeaveOrganisation(userOrganisation.id, 'leave')}>
                     Leave
                   </button>
                 </div>

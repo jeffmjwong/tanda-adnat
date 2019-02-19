@@ -12,7 +12,7 @@ class User < ApplicationRecord
             length: { minimum: 1 }
   validates :email,
             presence: true,
-            uniqueness: { message: 'already existed!' },
+            uniqueness: { case_sensitive: false },
             format: { with: /\A[^@\s]+@[^@\s]+\z/ } # same regex as devise
   validates :encrypted_password,
             presence: true,
