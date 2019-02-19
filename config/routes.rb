@@ -1,20 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'organisations#home'
+  root to: 'users#home'
 
   resources :organisations, only: %i[show create update destroy] do
-    collection do
-      get 'home'
-    end
-
     member do
+      post 'join'
       get 'shifts'
     end
   end
 
   resources :users, only: %i[show update] do
     collection do
-      put 'join_organisation'
+      get 'home'
       put 'leave_organisation'
       get 'organisation'
     end
