@@ -15,9 +15,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :shifts, only: %i[index create destroy] do
+  resources :shifts, only: %i[create destroy] do
     collection do
       post 'filter'
+      get '/:organisation_id', to: 'shifts#display'
     end
   end
 end

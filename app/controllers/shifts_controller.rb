@@ -1,13 +1,20 @@
 class ShiftsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, except: :index
 
   before_action :check_user
+
+  def display
+    organisation_id = params[:organisation_id]
+
+    @organisation = Organisation.find(organisation_id)
+    @shifts = Shift.for_organisation(organisation_id)
+  end
 
   def create
     shift = Shift.new(shift_params)
 
     if shift.save
-      render json: { shifts: Shift.by_organisation(params[:organisation_id]) }
+      render json: { shifts: Shift.for_organisation(params[:organisation_id]) }
     else
       render json: { errors: shift.errors.full_messages }
     end
@@ -29,7 +36,7 @@ class ShiftsController < ApplicationController
     shifts = Shift.filter_by_date(
       from_date: Time.zone.parse(params[:filter_from]),
       to_date: Time.zone.parse(params[:filter_to]).next_day
-    ).by_organisation(params[:organisation_id])
+    ).for_organisation(params[:organisation_id])
 
     render json: { shifts: shifts }
   rescue ArgumentError
@@ -47,10 +54,10 @@ class ShiftsController < ApplicationController
       raise(InvalidDateError, 'Date format is invalid or incomplete!')
     end
 
-    params.permit(:break_length).merge(
+    params.permit(:break_length, :organisation_id).merge(
+      user_id: current_user.id,
       start: start_date_time,
-      finish: finish_date_time,
-      user_id: current_user.id
+      finish: finish_date_time
     )
   end
 

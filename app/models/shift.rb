@@ -1,7 +1,8 @@
 class Shift < ApplicationRecord
   belongs_to :user
+  belongs_to :organisation
 
-  validates_presence_of :user, :start, :finish
+  validates_presence_of :user, :organisation, :start, :finish
 
   validates :break_length,
             numericality: {
@@ -11,15 +12,11 @@ class Shift < ApplicationRecord
 
   validate :finish_cannot_be_earlier_than_start
 
+  scope :for_organisation, ->(id) { where(organisation_id: id).order('start DESC').map(&:format_hash) }
+
   scope :filter_by_date, lambda { |from_date:, to_date:|
     where('start > :from AND start < :to', from: from_date, to: to_date)
   }
-
-  def self.by_organisation(organisation_id)
-    where(user_id: Organisation.find(organisation_id).users.pluck(:id))
-      .order('start DESC')
-      .map(&:format_hash)
-  end
 
   def format_hash
     {
@@ -62,7 +59,7 @@ class Shift < ApplicationRecord
   end
 
   def shift_cost
-    normal_hourly_rate = user.organisation.hourly_rate
+    normal_hourly_rate = organisation.hourly_rate
     sunday_hourly_rate = normal_hourly_rate * 2
 
     hours = detailed_hours_worked
