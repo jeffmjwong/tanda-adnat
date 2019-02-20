@@ -222,8 +222,8 @@ export default class Shifts extends Component {
 }
 
 Shifts.propTypes = {
-  organisation: T.object.isRequired,
   shifts: T.arrayOf(T.object),
+  organisation: T.object.isRequired,
   currentUser: T.object.isRequired,
 };
 

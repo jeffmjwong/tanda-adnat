@@ -64,13 +64,15 @@ export default class HomePage extends Component {
       this.setState({
         organisations: [...organisations, organisation],
         userOrganisations: [...userOrganisations, organisation],
+        name: '',
+        hourlyRate: '',
         responseError: null,
       });
     }
   }
 
   render() {
-    const { organisations, userOrganisations, responseError } = this.state;
+    const { organisations, userOrganisations, name, hourlyRate, responseError } = this.state;
 
     return (
       <div className='flex'>
@@ -107,6 +109,7 @@ export default class HomePage extends Component {
             <label>
               Name:
               <input
+                value={name}
                 onChange={this.updateField('name')}
               />
             </label>
@@ -116,6 +119,7 @@ export default class HomePage extends Component {
             <label>
               Hourly Rate: $
               <input
+                value={hourlyRate}
                 onChange={this.updateField('hourlyRate')}
               />
               per hour
@@ -140,7 +144,7 @@ export default class HomePage extends Component {
                 <div key={userOrganisation.id}>
                   <h3>{userOrganisation.name}</h3>
 
-                  <button onClick={() => window.open(`/organisations/${organisation.id}/shifts`, '_self')}>
+                  <button onClick={() => window.open(`/shifts/${userOrganisation.id}`, '_self')}>
                     View Shifts
                   </button>
                   <button onClick={() => this.editOrganisation(userOrganisation.id)} className='margin-small-x'>
