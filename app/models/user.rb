@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :organisation_memberships, dependent: :destroy
   has_many :organisations, through: :organisation_memberships
+  has_many :shifts, dependent: :destroy
 
   validates :name,
             presence: true,
