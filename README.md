@@ -9,7 +9,7 @@ This is a Ruby on Rails based application for Tanda's Challenge - Adnat.
 
 ## Getting Started
 
-1. Change directory to an empty folder and clone the project.
+1. Clone the project.
 ```
 $ git clone https://github.com/jeffmjwong/tanda-adnat.git
 $ cd tanda-adnat
@@ -18,4 +18,27 @@ $ cd tanda-adnat
 2. Install application dependencies.
 ```
 bundle install
+yarn install
 ```
+
+3. Run migration to set up the database.
+```
+bin/rake db:migrate
+```
+
+4. Start the server.
+```
+bin/rails s
+```
+
+5. Additionally, open a new tab and start webpack development mode to compile front-end more quickly.
+```
+bin/webpack-dev-server
+```
+
+6. To run the tests, type the following command.
+```
+bundle exec rspec
+```
+
+And that's it! Feel free to play around the application and browse the source code.
