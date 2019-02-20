@@ -10,5 +10,7 @@ html
     == stylesheet_pack_tag('application')
 
   body
+    p.notice == notice
+    p.alert == alert
     h1 Adnat
     == yield
