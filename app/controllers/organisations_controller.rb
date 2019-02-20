@@ -1,8 +1,8 @@
 class OrganisationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, except: %i[show shifts]
+  skip_before_action :verify_authenticity_token, except: :show
 
   before_action :check_user
-  before_action :set_organisation, only: %i[show update destroy shifts]
+  before_action :set_organisation, only: %i[show update destroy]
 
   def show; end
 
@@ -58,10 +58,6 @@ class OrganisationsController < ApplicationController
     else
       render json: { errors: organisation_membership.errors.full_messages }
     end
-  end
-
-  def shifts
-    @shifts = Shift.by_organisation(params[:id])
   end
 
   private

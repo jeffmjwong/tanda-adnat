@@ -6,7 +6,6 @@ Rails.application.routes.draw do
     member do
       post 'join'
       post 'leave'
-      get 'shifts'
     end
   end
 
@@ -16,7 +15,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :shifts, only: %i[create destroy] do
+  resources :shifts, only: %i[index create destroy] do
     collection do
       post 'filter'
     end
