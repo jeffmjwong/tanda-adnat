@@ -41,4 +41,4 @@ bin/webpack-dev-server
 bundle exec rspec
 ```
 
-And that's it! The application should now be accessible on [localhost:3000](localhost:3000). Feel free to play around the application and browse the source code.
+And that's it! The application should now be accessible on [localhost:3000](http://localhost:3000). Feel free to play around the application and browse the source code.
